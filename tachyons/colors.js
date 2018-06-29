@@ -1,4 +1,5 @@
 export default {
+  'inherit': 'inherit',
   ['black']: '#000',
   ['near-black']: '#111',
   ['dark-gray']: '#333',

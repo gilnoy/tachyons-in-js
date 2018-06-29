@@ -1,10 +1,13 @@
+import tachyonsConfig from '../config';
+const config = tachyonsConfig();
+
 export default {
   cf: {
-    ':before': {
+    [`${config.pseudo}:before`]: {
       content: '',
       display: 'table'
     },
-    ':after': {
+    [`${config.pseudo}:after`]: {
       content: '',
       display: 'table',
       clear: 'both'

@@ -2,6 +2,7 @@ import utilsCls from './tachyons/tachyons';
 import mediaQueries from './tachyons/mediaQueries';
 import tachyonsConfig  from './config';
 
+const config = tachyonsConfig();
 
 
 // TODO - add to config file - pseudo syntax and in skins if wanna generate border color   + change variables values
@@ -11,13 +12,11 @@ import tachyonsConfig  from './config';
 //Object.freeze(cssUtils);
 
 
-const config = tachyonsConfig();
+
 export {
     tachyonsConfig,
     mediaQueries
 }
-
-
 
 const mdRegex = (() => {
     const md = Object.keys(mediaQueries).map( name => `-${name}`);
@@ -69,16 +68,3 @@ export default (classesStr) => {
 
     }, {})
 }
-
-// /* Variables */
-// /* Importing here will allow you to override any variables in the modules */
-// @import './_colors';
-// @import './_media-queries';
-
-// /* Debugging */
-// @import './_debug-children';
-// @import './_debug-grid';
-
-// /* Uncomment out the line below to help debug layout issues */
-// /* @import './_debug'; */
-

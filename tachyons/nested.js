@@ -1,6 +1,9 @@
 import v from './variables';
 import c from './colors';
-    
+import tachyonsConfig  from '../config';
+
+const config = tachyonsConfig();
+
 export default {
   'nested-copy-line-height': {
     p: { lineHeight: v.lineHeightCopy },
@@ -57,12 +60,12 @@ export default {
       color: c.blue,
       transition: 'color .15s ease-in',
 
-      ':hover': {
+      [`${config.pseudo}:hover`]: {
         color: c.lightBlue,
         transition: 'color .15s ease-in'
       },
 
-      ':focus': {
+      [`${config.pseudo}:focus`]: {
         color: c.lightBlue,
         transition: 'color .15s ease-in'
       }

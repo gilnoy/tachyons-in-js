@@ -1,19 +1,34 @@
 import colors from './colors';
+import tachyonsConfig from '../config';
 
-const colorClasses = {};
+const config = tachyonsConfig();
+let colorClasses = {};
 
-Object.keys(colors).forEach( colorName => 
-    Object.assign(colorClasses, {
-        [colorName]: { color: colors[colorName] },
-        [`bg-${colorName}`]: { backgroundColor: colors[colorName] },
-        [`b--${colorName}`]: {borderColor: colors[colorName]}
-    })
-);
+Object.keys(colors).forEach( colorName => {
+    const color = config.useColor ? {
+        [colorName]: {
+            color: colors[colorName]
+        }
+    } : {};
 
+    const backgroundColor = config.useBackgroundColor ? {
+        [`bg-${colorName}`]: {
+            backgroundColor: colors[colorName]
+        }
+    } : {};
 
-export default {
-    ...colorClasses,
-    ['bg-inherit']: { backgroundColor: 'inherit' },
-    ['color-inherit']: { color: 'inherit' },
-    ['b--inherit']: { borderColor: 'inherit' },
-}
+    const borderColor = config.useBorderColor ? {
+        [`b--${colorName}`]: {
+            borderColor: colors[colorName]
+        }
+    } : {};
+
+    colorClasses = { 
+        ...colorClasses,
+        ...color,
+        ...backgroundColor,
+        ...borderColor
+    }
+});
+
+export default colorClasses;
