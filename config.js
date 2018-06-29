@@ -2,7 +2,7 @@ let config = {
   pseudo: "&",
   useBorderColor: true,
   useBackgroundColor: true,
-  useColor: true,
+  useColor: true
 }
 
 export default (params) => {

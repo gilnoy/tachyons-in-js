@@ -1,3 +1,5 @@
+import kebabCase from 'lodash/kebabCase';
+import mapKeys from 'lodash/mapKeys';
 import utilsCls from './tachyons/tachyons';
 import mediaQueries from './tachyons/mediaQueries';
 import tachyonsConfig  from './config';
@@ -11,17 +13,35 @@ const config = tachyonsConfig();
 // TODO:do freeze only in development
 //Object.freeze(cssUtils);
 
-
-
 export {
     tachyonsConfig,
     mediaQueries
+}
+
+export const tachyonsToCss = (classesStr) => {
+    const cssAsObj = tachyons(classesStr, true);
+
+    const css = JSON.stringify(cssAsObj)
+        .replace(/\,/g,";")
+        .replace(/\"/g,"")
+        .replace(/\):/g,")")
+        .replace(/^{/g, "")
+        .replace(/}$/g, "")
+        .replace(/:hover:/,":hover")
+        .replace(/:active:/,":active")
+        .replace(/:focus:/,":focus")
+        .replace(/:visited:/,":visited")
+        .replace(/:before:/,'before')
+        .replace(/:after:/,'after');
+
+    return css;
 }
 
 const mdRegex = (() => {
     const md = Object.keys(mediaQueries).map( name => `-${name}`);
     return `^(.*?)(${md.join("|")})$`;
 })();
+
 
 const pseudoRegEx = '^(hover-|active-|focus-|visited-|before-|after-)(.*)';
 
@@ -40,7 +60,18 @@ const matchClassName = (className) => {
     }
 }
 
-export default (classesStr) => {
+const getProp = (utilName) => {
+    const prop = utilsCls[utilName];
+    if(true) {
+        return mapKeys(prop, function(value, key) {
+            return kebabCase(key);
+        });
+    }
+    
+    return prop;
+}
+
+const tachyons = (classesStr, asCss) => {
     const classesArr = classesStr.split(" ");
 
     return classesArr.reduce((prevProps, className) => {
@@ -49,7 +80,7 @@ export default (classesStr) => {
         
         if(match.length) {
             const [utilName, selector] = match;
-            const prop = utilsCls[utilName];
+            const prop = getProp(utilName, asCss);
             
             if(prop && selector) {
                 prevProps = {...prevProps, [selector]: {...(prevProps[selector] || {}), ...prop}};
@@ -57,8 +88,9 @@ export default (classesStr) => {
                 console.error(`media query '${prop}' dpes not exists in tachyons`);
             }
         } else {
-            if(utilsCls[className]) {
-                prevProps = {...prevProps, ...utilsCls[className]};
+            const prop = getProp(className, asCss);
+            if(prop) {
+                prevProps = {...prevProps, ...prop};
             } else{
                 console.error(`class '${className}' does not exists in tachyons`);
             }
@@ -67,4 +99,7 @@ export default (classesStr) => {
         return prevProps;
 
     }, {})
-}
+    
+};
+
+export default tachyons;
