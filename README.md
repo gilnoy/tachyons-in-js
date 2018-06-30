@@ -4,7 +4,7 @@ Tachyons for CSS in JS libraries
 
 CSS In JS Libraries tested:
 
-glamorous, styled-components
+glamorous, styled-components, emotion
 
 * Customizable Media Queries
 * Media Queries for all utils
