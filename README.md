@@ -19,7 +19,7 @@ glamorous, styled-components
 ```JSX
 import React from 'react';
 import styled from 'styled-components';
-import {tachyonsToCss as tc} from 'tachyons-to-css';
+import {tachyonsToCss as tc} from 'tachyons-in-css';
 
 const Href = styled.a`
   ${tc('flex tc pa3 bg-purple white h4 w4 f3 bg-red-m yellow-m hover-bg-green')}
@@ -35,7 +35,7 @@ const Href = styled.a`
 ```JSX
 import React from 'react';
 import glamorous from 'glamorous';
-import tc from 'tachyons-to-css';
+import tc from 'tachyons-in-css';
 
 const Href = glamorous.a(
   ${tc('flex tc pa3 bg-purple white h4 w4 f3 bg-red-m yellow-m hover-bg-green')}

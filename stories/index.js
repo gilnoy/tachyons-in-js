@@ -23,4 +23,3 @@ storiesOf('Glamorous', module)
     <StHref>Hello Styled Components</StHref>
   </div>;
 })
-  
