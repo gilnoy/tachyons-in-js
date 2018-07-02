@@ -1,4 +1,4 @@
-import colors, { addColor, getColor } from '../tachyons/js/colors';
+import colors, { addColor, getColor } from '../tachyons/colors';
 
 test('return a list of colors', () => {
     expect(Object.keys(colors).length).toBeGreaterThan(0);

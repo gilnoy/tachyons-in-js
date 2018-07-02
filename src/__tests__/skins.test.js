@@ -1,5 +1,5 @@
-import colors, { getColor } from '../tachyons/js/colors';
-import skins from '../tachyons/js/skins';
+import colors, { getColor } from '../tachyons/colors';
+import skins from '../tachyons/skins';
 
 test('return a list of skins by colors', () => {
     const colorNameArr = Object.keys(colors);
