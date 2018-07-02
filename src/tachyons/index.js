@@ -1,28 +1,28 @@
 import kebabCase from 'lodash/kebabCase';
 import mapKeys from 'lodash/mapKeys';
 import { addTachyon, getTachyon } from './js/tachyons';
-import mediaQueries from './js/mediaQueries';
+import { getMediaQuery, getMediaQueries } from './js/mediaQueries';
 import { getSkinTachyons } from './js/skins';
 import { addColor } from './js/colors';
 import tachyonsConfig  from './config';
 
-const mdRegex = (() => {
-    const md = Object.keys(mediaQueries).map( name => `-${name}`);
+const mdRegex = () => {
+    const md = Object.keys(getMediaQueries()).map( name => `-${name}`);
     return `^(.*?)(${md.join("|")})$`;
-})();
+};
 
 const pseudoRegEx = '^(hover-|active-|focus-|visited-|before-|after-)(.*)';
 
 const matchClassName = (className: string) => {
     const config: Object = tachyonsConfig();
-    const md = new RegExp(mdRegex,'gm').exec(className);
+    const md = new RegExp(mdRegex(),'gm').exec(className);
     const pseudo = new RegExp(pseudoRegEx,'gm').exec(className);
 
     if(pseudo) {
         return [pseudo[2], `${config.pseudo}:${pseudo[1].replace('-','')}`];
     }
     else if(md) {
-        return [md[1], mediaQueries[md[2].replace("-","")]];
+        return [md[1], getMediaQuery(md[2].replace("-",""))];
     } 
     else {
         return [];
@@ -84,7 +84,7 @@ const getTachyons = (classesStr: string, asCss: boolean) => {
             const prop = getProp(className, asCss);
             if(prop) {
                 prevProps = {...prevProps, ...prop};
-            } else{
+            } else {
                 console.warn(`class '${className}' does not exists in tachyons`);
             }
         }

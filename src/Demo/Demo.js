@@ -6,6 +6,7 @@ import { css as glamor } from 'glamor';
 import { StyleSheet, css as aphrodite} from 'aphrodite';
 import tc, {tachyonsToCss as tcCss, addSkin} from '../tachyons/';
 import tachyonsConfig  from '../tachyons/config';
+import { addMediaQuery } from '../tachyons/js/mediaQueries';
 
 const GlamorousComponent = glamorous.a({
     ...tc('tc pa3 ba br3 h4 w4 ma3 f3'),
@@ -13,7 +14,7 @@ const GlamorousComponent = glamorous.a({
     ...tc('hover-bg-washed-red hover-light-pink hover-b--light-pink'),
     ...tc('bg-mid-gray-m moon-gray-m'),
     //...tc('hover-bg-moon-gray-m hover-mid-gray-m') /* not supported */
-})
+});
 
 const StyledComponent = styled.a`
     ${tcCss('tc pa3 ba br3 h4 w4 ma3 f3')}
@@ -83,8 +84,10 @@ const AdditionalSkin = () => {
 
     const Cmp = glamorous.a({
         ...tc('tc pa3 ba br3 h4 w4 ma3 f3'),
+        ...tc('tc pa3 ba br3 h4 w4 ma3 f3'),
         ...tc('bg-peach-puff peru b--peru'),
-        ...tc('hover-bg-peru hover-peach-puff hover-b--peach-puff')
+        ...tc('hover-bg-peru hover-peach-puff hover-b--peach-puff'),
+        ...tc('bg-red-xs')
     })
 
     return <Cmp>Additional Colors</Cmp>

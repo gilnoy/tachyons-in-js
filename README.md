@@ -1,4 +1,14 @@
-Tachyons in JS
+# Tachyons in JS
+
+[![Build Status][build-badge]][build]
+[![version][version-badge]][package]
+[![downloads][downloads-badge]][npmcharts]
+[![MIT License][license-badge]][license]
+
+[![PRs Welcome][prs-badge]][prs]
+
+[![Watch on GitHub][github-watch-badge]][github-watch]
+[![Star on GitHub][github-star-badge]][github-star]
 
 Tachyons for CSS in JS libraries
 
@@ -57,6 +67,18 @@ addSkin('peach-puff', '#ffdab9');
 tc('bg-peach-puff peach-puff b--peach-puff');
 
 ```
+
+## Example - Adsd Media Query
+
+<!-- prettier-ignore -->
+```JSX
+import { addMediaQuery }  from 'tacyons-in-js/mediaQueries';
+
+addMediaQuery("mobile", '@media only screen and (max-width: 600px)');
+tc('bg-red-mobile w-100-mobile ');
+
+```
+
 
 ## Example - Set Config
 
