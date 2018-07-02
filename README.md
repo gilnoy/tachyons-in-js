@@ -1,15 +1,5 @@
 # Tachyons in JS
 
-[![Build Status][build-badge]][build]
-[![version][version-badge]][package]
-[![downloads][downloads-badge]][npmcharts]
-[![MIT License][license-badge]][license]
-
-[![PRs Welcome][prs-badge]][prs]
-
-[![Watch on GitHub][github-watch-badge]][github-watch]
-[![Star on GitHub][github-star-badge]][github-star]
-
 Tachyons for CSS in JS libraries
 
 Examples written in React, but can be used with other libraries.
