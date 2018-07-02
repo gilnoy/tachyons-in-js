@@ -1,21 +1,20 @@
 import kebabCase from 'lodash/kebabCase';
 import mapKeys from 'lodash/mapKeys';
-import utilsCls from './tachyons/tachyons';
-import mediaQueries from './tachyons/mediaQueries';
+import { addTachyon, getTachyon } from './js/tachyons';
+import mediaQueries from './js/mediaQueries';
+import { getSkinTachyons } from './js/skins';
+import { addColor } from './js/colors';
 import tachyonsConfig  from './config';
-
-// TODO:do freeze only in development
-//Object.freeze(cssUtils);
-
-const config = tachyonsConfig();
 
 const mdRegex = (() => {
     const md = Object.keys(mediaQueries).map( name => `-${name}`);
     return `^(.*?)(${md.join("|")})$`;
 })();
+
 const pseudoRegEx = '^(hover-|active-|focus-|visited-|before-|after-)(.*)';
 
-const matchClassName = (className) => {
+const matchClassName = (className: string) => {
+    const config: Object = tachyonsConfig();
     const md = new RegExp(mdRegex,'gm').exec(className);
     const pseudo = new RegExp(pseudoRegEx,'gm').exec(className);
 
@@ -30,8 +29,9 @@ const matchClassName = (className) => {
     }
 }
 
-const getProp = (utilName, asCss) => {
-    const prop = utilsCls[utilName];
+const getProp = (tachyonName: string, asCss: boolean) => {
+    const prop: Object = getTachyon(tachyonName);
+    
     if(asCss) {
         return mapKeys(prop, function(value, key) {
             return kebabCase(key);
@@ -41,15 +41,19 @@ const getProp = (utilName, asCss) => {
     return prop;
 }
 
-export const tachyonsToCss = (classesStr) => {
-    const cssAsObj = tachyons(classesStr, true);
+export const addSkin = (colorName: string, color: string) => {
+    addColor(colorName, color);
+    const skinProps = getSkinTachyons(colorName, color);
+    addTachyon(skinProps);
+}
 
-    const css = JSON.stringify(cssAsObj)
-        .replace(/\,/g,";")
-        .replace(/\"/g,"")
+export const tachyonsToCss = (classesStr: string) => {
+    const cssAsObj: Object = getTachyons(classesStr, true);
+
+    const css: string = JSON.stringify(cssAsObj)
+        .replace(/,/g,";")
+        .replace(/^{|"|}$/g,"")
         .replace(/\):/g,")")
-        .replace(/^{/g, "")
-        .replace(/}$/g, "")
         .replace(/:hover:/,":hover")
         .replace(/:active:/,":active")
         .replace(/:focus:/,":focus")
@@ -57,10 +61,10 @@ export const tachyonsToCss = (classesStr) => {
         .replace(/:before:/,'before')
         .replace(/:after:/,'after');
 
-    return css;
+    return `${css};`;
 }
 
-const tachyons = (classesStr, asCss) => {
+const getTachyons = (classesStr: string, asCss: boolean) => {
     const classesArr = classesStr.split(" ");
 
     return classesArr.reduce((prevProps, className) => {
@@ -68,20 +72,20 @@ const tachyons = (classesStr, asCss) => {
         const match = matchClassName(className);
         
         if(match.length) {
-            const [utilName, selector] = match;
-            const prop = getProp(utilName, asCss);
+            const [tachyonName, selector] = match;
+            const prop = getProp(tachyonName, asCss);
             
             if(prop && selector) {
                 prevProps = {...prevProps, [selector]: {...(prevProps[selector] || {}), ...prop}};
             } else {
-                console.error(`media query '${prop}' dpes not exists in tachyons`);
+                console.warn(`media query '${prop}' does not exists in tachyons`);
             }
         } else {
             const prop = getProp(className, asCss);
             if(prop) {
                 prevProps = {...prevProps, ...prop};
             } else{
-                console.error(`class '${className}' does not exists in tachyons`);
+                console.warn(`class '${className}' does not exists in tachyons`);
             }
         }
         
@@ -90,4 +94,4 @@ const tachyons = (classesStr, asCss) => {
     }, {})
 };
 
-export default tachyons;
+export default getTachyons;

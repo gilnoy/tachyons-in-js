@@ -49,7 +49,7 @@ import widths from './widths';
 import wordBreak from './wordBreak';
 import zIndex from './zIndex';
 
-export default {
+let tachyons = {
     ...aspectRatios,
     ...backgroundPosition,
     ...backgroundSize,
@@ -100,4 +100,13 @@ export default {
     ...widths,
     ...wordBreak,
     ...zIndex
+};
+
+export const addTachyon = (tachyon) => {
+    tachyons = {...tachyons, ...tachyon};
 }
+
+export const getTachyon = (tachyonName) => tachyons[tachyonName];
+
+
+export default tachyons;

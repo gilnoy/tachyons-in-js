@@ -1,31 +1,28 @@
 {
   "name": "tachyons-in-js",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
+  "private": false,
+  "devDependencies": {
+    "aphrodite": "^2.2.2",
     "emotion": "^9.2.4",
+    "glamor": "^2.20.40",
     "glamorous": "^4.13.1",
-    "jest": "^23.2.0",
-    "lodash": "^4.17.10",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-emotion": "^9.2.4",
     "react-scripts": "1.1.4",
-    "storybook": "^1.0.0",
     "styled-components": "^3.3.3"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.10"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "flow": "flow"
   },
-  "devDependencies": {
-    "@storybook/addon-actions": "^3.4.8",
-    "@storybook/addon-links": "^3.4.8",
-    "@storybook/react": "^3.4.8",
-    "react-test-renderer": "^16.4.1"
+  "dependencies": {
+    "flow-bin": "^0.75.0"
   }
 }
