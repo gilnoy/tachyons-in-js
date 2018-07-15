@@ -1,4 +1,3 @@
-// @flow
 export default {
   'overflow-visible': { overflow: 'visible' },
   'overflow-hidden': { overflow: 'hidden' },

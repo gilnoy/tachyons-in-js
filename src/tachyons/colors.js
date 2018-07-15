@@ -63,10 +63,10 @@ let colors = {
   'washed-red': '#ffdfdf',
 };
 
-export const addColor = (colorName: string, color: string):void => {
+export const addColor = (colorName, color) => {
   colors[colorName] = color;
 }
 
-export const getColor = (colorName: string):string => colors[colorName];
+export const getColor = (colorName) => colors[colorName];
 
 export default colors;

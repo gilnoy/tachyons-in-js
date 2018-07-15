@@ -1,10 +1,9 @@
-import kebabCase from 'lodash/kebabCase';
-import mapKeys from 'lodash/mapKeys';
-import { addTachyon, getTachyon } from './tachyons/tachyons';
-import { getMediaQuery, getMediaQueries } from './tachyons/mediaQueries';
+import { getProp, getPropAsKabab } from './utils';
+import { addTachyon } from './tachyons/tachyons';
+import { getMediaQuery, getMediaQueries, addMediaQuery as _addMediaQuery } from './tachyons/mediaQueries';
 import { getSkinTachyons } from './tachyons/skins';
 import { addColor } from './tachyons/colors';
-import tachyonsConfig  from './config';
+import _tachyonsConfig from './config';
 
 const mdRegex = () => {
     const md = Object.keys(getMediaQueries()).map( name => `-${name}`);
@@ -13,8 +12,8 @@ const mdRegex = () => {
 
 const pseudoRegEx = '^(hover-|active-|focus-|visited-|before-|after-)(.*)';
 
-const matchClassName = (className: string) => {
-    const config: Object = tachyonsConfig();
+const matchClassName = (className) => {
+    const config = _tachyonsConfig();
     const md = new RegExp(mdRegex(),'gm').exec(className);
     const pseudo = new RegExp(pseudoRegEx,'gm').exec(className);
 
@@ -29,28 +28,16 @@ const matchClassName = (className: string) => {
     }
 }
 
-const getProp = (tachyonName: string, asCss: boolean) => {
-    const prop: Object = getTachyon(tachyonName);
-    
-    if(asCss) {
-        return mapKeys(prop, function(value, key) {
-            return kebabCase(key);
-        });
-    }
-    
-    return prop;
-}
-
-export const addSkin = (colorName: string, color: string) => {
+export const addSkin = (colorName, color) => {
     addColor(colorName, color);
     const skinProps = getSkinTachyons(colorName, color);
     addTachyon(skinProps);
 }
 
-export const tachyonsToCss = (classesStr: string) => {
-    const cssAsObj: Object = getTachyons(classesStr, true);
+export const tachyonsToCss = (classesStr) => {
+    const cssAsObj = getTachyons(classesStr, true);
 
-    const css: string = JSON.stringify(cssAsObj)
+    const css = JSON.stringify(cssAsObj)
         .replace(/,/g,";")
         .replace(/^{|"|}$/g,"")
         .replace(/\):/g,")")
@@ -64,7 +51,7 @@ export const tachyonsToCss = (classesStr: string) => {
     return `${css};`;
 }
 
-const getTachyons = (classesStr: string, asCss: boolean) => {
+const getTachyons = (classesStr, asCss) => {
     const classesArr = classesStr.split(" ");
 
     return classesArr.reduce((prevProps, className) => {
@@ -94,4 +81,6 @@ const getTachyons = (classesStr: string, asCss: boolean) => {
     }, {})
 };
 
+export const tachyonsConfig = _tachyonsConfig;
+export const addMediaQuery = _addMediaQuery;
 export default getTachyons;

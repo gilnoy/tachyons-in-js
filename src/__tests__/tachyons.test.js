@@ -1,6 +1,5 @@
-import tachyonsConfig from '../config';
 import tac, { tachyonsToCss as tacCss }  from '../';
-import tachyons, { addTachyon, getTachyon } from '../tachyons/tachyons';
+import tachyons, { getTachyon } from '../tachyons/tachyons';
 import camelCase from 'lodash/camelCase';
 
 

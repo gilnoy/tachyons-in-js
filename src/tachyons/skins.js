@@ -1,9 +1,8 @@
-// @flow
 import colors, { getColor } from './colors';
 
-let skins: Object = {};
+let skins= {};
 
-export const getSkinTachyons = (colorName: string): Object => {
+export const getSkinTachyons = (colorName) => {
     const color = getColor(colorName);
     
     return {
