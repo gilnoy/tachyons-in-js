@@ -10,14 +10,16 @@ export default [
         input: 'src/index.js',
         output: {
             file: pkg.main,
-            format: 'umd'
+            format: 'umd',
+            sourcemap: true
         },
         moduleName : "tachyonsinjs",
         plugins: [
             resolve(),
             babel({
                 exclude: 'node_modules/**'
-            })     
+            }),
+            uglify()    
         ]
     }
 ]
