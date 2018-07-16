@@ -1,19 +1,29 @@
 import { getProp, getPropAsKabab } from './utils';
 import { addTachyon } from './tachyons/tachyons';
-import { getMediaQuery, getMediaQueries, addMediaQuery as _addMediaQuery } from './tachyons/mediaQueries';
+import { getMediaQuery, getMediaQueries } from './tachyons/mediaQueries';
 import { getSkinTachyons } from './tachyons/skins';
 import { addColor } from './tachyons/colors';
-import _tachyonsConfig from './config';
+import tachyonsConfig from './config';
 
+/**
+* find media query pattern
+*/
 const mdRegex = () => {
     const md = Object.keys(getMediaQueries()).map( name => `-${name}`);
     return `^(.*?)(${md.join("|")})$`;
 };
-
+/**
+* find pseudo pattern
+*/
 const pseudoRegEx = '^(hover-|active-|focus-|visited-|before-|after-)(.*)';
-
+/**
+* parse classes string and search for pseudo and media query patters, for example: pa3:hover, pa3-sm
+* TODO: support both media query and psuedo
+* @param {string} className
+* @return {array} [className, psuedo | mediaQuery]
+*/
 const matchClassName = (className) => {
-    const config = _tachyonsConfig();
+    const config = tachyonsConfig();
     const md = new RegExp(mdRegex(),'gm').exec(className);
     const pseudo = new RegExp(pseudoRegEx,'gm').exec(className);
 
@@ -27,13 +37,21 @@ const matchClassName = (className) => {
         return [];
     }
 }
-
+/**
+* Add new skin for Tachyons that contains background, border and color
+* @param {string} colorName
+* @param {string} color
+*/
 export const addSkin = (colorName, color) => {
     addColor(colorName, color);
     const skinProps = getSkinTachyons(colorName, color);
     addTachyon(skinProps);
 }
-
+/**
+* Get tachyons styles utils as a string
+* @param {string} classesStr - list of all tachyons utils seperated by space
+* @return {string}
+*/
 export const tachyonsToCss = (classesStr) => {
     const cssAsObj = getTachyons(classesStr, true);
 
@@ -50,6 +68,13 @@ export const tachyonsToCss = (classesStr) => {
 
     return `${css};`;
 }
+
+/**
+* Get tachyons styles utils as an object
+* @param {string} classesStr - list of all tachyons utils seperated by space
+* @param {boolean} asCss - format styles as a string
+* @return {object}
+*/
 
 const getTachyons = (classesStr, asCss) => {
     const classesArr = classesStr.split(" ");
@@ -81,6 +106,6 @@ const getTachyons = (classesStr, asCss) => {
     }, {})
 };
 
-export const tachyonsConfig = _tachyonsConfig;
-export const addMediaQuery = _addMediaQuery;
+export { addMediaQuery } from './tachyons/mediaQueries';
+export { default as tachyonsConfig } from './config';
 export default getTachyons;

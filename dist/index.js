@@ -1423,14 +1423,11 @@
         }, {});
     };
 
-    var tachyonsConfig$1 = tachyonsConfig;
-    var addMediaQuery$1 = addMediaQuery;
-
     exports.addSkin = addSkin;
     exports.tachyonsToCss = tachyonsToCss;
-    exports.tachyonsConfig = tachyonsConfig$1;
-    exports.addMediaQuery = addMediaQuery$1;
     exports.default = getTachyons;
+    exports.addMediaQuery = addMediaQuery;
+    exports.tachyonsConfig = tachyonsConfig;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
